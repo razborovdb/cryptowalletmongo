@@ -26,7 +26,7 @@ export default function EditCryptoTemplate({cryptoName}) {
 
     const [currentCrypto, setCurrentCrypto] = useState({});
     const [previewImg, setPreviewImg] = useState("");
-    const { editStatus } = useSelector((state) => state.cryptos);
+    const { updateStatus } = useSelector((state) => state.cryptos);
 
     const [cryptoImg, setCryptoImg] = useState("");
 
@@ -75,7 +75,7 @@ export default function EditCryptoTemplate({cryptoName}) {
       
     );
 
-    setOpen(false);
+    //setOpen(false);
   };
 
   const handleClickOpen = () => {
@@ -143,8 +143,22 @@ export default function EditCryptoTemplate({cryptoName}) {
                     />
 
                     <PrimaryButton type="submit">
-                    {editStatus === "pending" ? "Submitting" : "Submit"}
+                    {updateStatus === "pending" ? "Submitting" : "Submit"}
                     </PrimaryButton>
+                    <div className="back-to-cryptos">
+                      <Button onClick={handleClose}>
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                          width="20" 
+                          height="20" 
+                          fill="currentColor" 
+                          className="bi bi-arrow-left" 
+                          viewBox="0 0 16 16">
+                          <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                        </svg>
+                        <span>Back To Cryptos</span>
+                        
+                      </Button>
+                    </div>
                 </StyledForm>
                 <ImagePreview>
                     {previewImg ? (
@@ -157,9 +171,6 @@ export default function EditCryptoTemplate({cryptoName}) {
                 </ImagePreview>
             </StyledEditCrypto>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

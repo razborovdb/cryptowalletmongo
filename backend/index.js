@@ -10,6 +10,27 @@ app.use(express.json());
 
 app.use(cors());
 
+const userInfoRoute = require("./routes/userinfo");
+app.use("/api/user", userInfoRoute);
+
+const cryptosRoute = require("./routes/cryptos");
+app.use("/api/cryptos", cryptosRoute);
+
+const cryptoRoute = require("./routes/crypto");
+app.use("/api/crypto", cryptoRoute);
+
+const loginRoute = require("./routes/login");
+app.use("/api/user/login", loginRoute);
+
+const registerRoute = require("./routes/register");
+app.use("/api/user/register", registerRoute);
+
+const walletsRoute = require("./routes/wallets");
+app.use("/api/wallets", walletsRoute);
+
+const walletRoute = require("./routes/wallet");
+app.use("/api/wallet", walletRoute);
+
 const projectsRoute = require("./routes/projects");
 app.use("/api/project", projectsRoute);
 

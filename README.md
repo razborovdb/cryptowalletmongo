@@ -151,41 +151,41 @@ String projectId;
 Double paymentDate;
 ```
 ----------------------------------------------------
-## 6.2. RegisterUser Endpoint
+## 6.2. RegisterUser Endpoint (made)
 
 * Accepts `POST` requests to `/api/user/register`
 * Accepts a User with all parameters and returns token.
   * If the given email in User is found, will return an error.
   * If user created, return token.
 
-## 6.3. LoginUser Endpoint
+## 6.3. LoginUser Endpoint (made)
 
 * Accepts `POST` requests to `/api/user/login`
 * Accepts a User with email and returns token.
   * If the User with given email is not found, will return an error.
   * If User is found, return token.
 
-## 6.4. GetAvailableCryptocurrencies Endpoint
+## 6.4. GetAvailableCryptocurrencies Endpoint (made)
 
 * Accepts `GET` requests to `/api/cryptos`
 * Accepts token and returns the list of available cryptocurrencies.
 
-## 6.4. DeleteCryptoInAvailableCryptocurrencies Endpoint
+## 6.4. DeleteCryptoInAvailableCryptocurrencies Endpoint (made)
 
 * Accepts `DELETE` requests to `/api/crypto`
 * Accepts token and CryptoCurrencies with cryptoName returns cryptoName.
 
-## 6.5. AddCryptoToAvailableCryptocurrencies Endpoint
+## 6.5. AddCryptoToAvailableCryptocurrencies Endpoint (made)
 
 * Accepts `POST` requests to `/api/crypto`
 * Accepts token and CryptoCurrencies with all parameters returns added crypto.
 
-## 6.6. UpdateCryptoInAvailableCryptocurrencies Endpoint
+## 6.6. UpdateCryptoInAvailableCryptocurrencies Endpoint (made)
 
 * Accepts `PUT` requests to `/api/crypto`
 * Accepts token and CryptoCurrencies with cryptoName returns updated crypto.
 
-## 6.7. GetCryptoFromAvailableCryptocurrencies Endpoint
+## 6.7. GetCryptoFromAvailableCryptocurrencies Endpoint (made)
 
 * Accepts `GET` requests to `/api/crypto`
 * Accepts token and cryptoName as request param, returns crypto.
@@ -227,18 +227,18 @@ Double paymentDate;
 * Accepts token, walletName as path variable and CryptoCurrencies with all parameters returns cryptoName.
 
 
-## 6.15. GetUser Endpoint
+## 6.15. GetUser Endpoint  (made)
 
 * Accepts `GET` requests to `/api/user`
 * Accepts token, email as path variable returns Users.
 
 
-## 6.16. UpdateUser Endpoint
+## 6.16. UpdateUser Endpoint (made)
 
 * Accepts `PUT` requests to `/api/user`
 * Accepts token, Users as body returns Users.
 
-## 6.17. GetProject Endpoint
+## 6.17. GetProject Endpoint (made)
 
 * Accepts `GET` requests to `/api/project`
 * Accepts no parameters returns Projects.

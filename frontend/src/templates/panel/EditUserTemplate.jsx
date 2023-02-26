@@ -27,6 +27,7 @@ const EditUserTemplate = () => {
     // const {cryptos} = useSelector((state) => state.cryptos);
     const [cryptoParams, setCryptoParams] = useState("");
     const [loading, setLoading] = useState(false);
+    const [updating, setUpdating] = useState(false);
     const [cryptos, setCryptos] = useState([]);
 
     const [user, setUser] = useState("");
@@ -109,6 +110,7 @@ const EditUserTemplate = () => {
         //       token: auth.token,
         //   })
         // );
+        setUpdating(true);
 
         await axios.put(
           `${url}/user`,
@@ -124,16 +126,21 @@ const EditUserTemplate = () => {
           {
             headers: setHeaders(auth.token)
         }
+
+        
         
       );
+      setUpdating(false);
 
-        navigate(`/panel/userinfo`);
+        //navigate(`/panel/userinfo`);
 
     };
 
     
 
     return (
+      <div>
+        {loading ? (<p>Loading...</p>) :
       <StyledUser>
         <UserContainer>
                 <StyledForm onSubmit={handleSubmit}>
@@ -156,7 +163,7 @@ const EditUserTemplate = () => {
                     
 
                     <PrimaryButton type="submit">
-                    {updateUserStatus === "pending" ? "Submitting" : "Submit"}
+                    {updating ? "Submitting" : "Submit"}
                     </PrimaryButton>
                     <div className="back-to-wallet">
                     <Link to={`/panel/userinfo`}>
@@ -183,6 +190,8 @@ const EditUserTemplate = () => {
                 </ImagePreview>
                 </UserContainer>
             </StyledUser>
+          }
+          </div>
     );
   }
  
