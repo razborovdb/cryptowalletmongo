@@ -80,7 +80,7 @@ export const walletsGetOne = createAsyncThunk(
 export const walletsCreate = createAsyncThunk(
     
     "wallets/walletsCreate",
-    async (values) => {
+    async (values, {rejectWithValue}) => {
   
       try {
         const response = await axios.post(
@@ -100,7 +100,7 @@ export const walletsCreate = createAsyncThunk(
 
         return response.data;
       } catch (error) {
-        
+        return rejectWithValue(err.response.data);
 
       }
     }
@@ -109,7 +109,7 @@ export const walletsCreate = createAsyncThunk(
   export const walletsCreateCrypto = createAsyncThunk(
     
     "wallets/walletsCreateCrypto",
-    async (values) => {
+    async (values, {rejectWithValue}) => {
   
 
       try {
@@ -134,7 +134,7 @@ export const walletsCreate = createAsyncThunk(
 
         return response.data;
       } catch (error) {
-        
+        return rejectWithValue(err.response.data);
 
       }
     }
@@ -143,7 +143,7 @@ export const walletsCreate = createAsyncThunk(
   export const walletsUpdateCrypto = createAsyncThunk(
     
     "wallets/walletsUpdateCrypto",
-    async (values) => {
+    async (values, {rejectWithValue}) => {
   
 
       try {
@@ -168,7 +168,7 @@ export const walletsCreate = createAsyncThunk(
 
         return response.data;
       } catch (error) {
-        
+        return rejectWithValue(err.response.data);
 
       }
     }
@@ -177,7 +177,7 @@ export const walletsCreate = createAsyncThunk(
   export const walletsDelete = createAsyncThunk(
     
     "wallets/walletsDelete",
-    async (values) => {
+    async (values, {rejectWithValue}) => {
         
       try {
         const response = await axios.delete(
@@ -196,7 +196,7 @@ export const walletsCreate = createAsyncThunk(
 
         return response.data;
       } catch (error) {
-        
+        return rejectWithValue(err.response.data);
 
       }
     }
@@ -205,7 +205,7 @@ export const walletsCreate = createAsyncThunk(
   export const walletsDeleteCrypto = createAsyncThunk(
     
     "wallets/walletsDeleteCrypto",
-    async (values) => {
+    async (values, {rejectWithValue}) => {
         
       try {
         const response = await axios.delete(
@@ -227,7 +227,7 @@ export const walletsCreate = createAsyncThunk(
 
         return response.data;
       } catch (error) {
-        
+        return rejectWithValue(err.response.data);
 
       }
     }
@@ -236,7 +236,7 @@ export const walletsCreate = createAsyncThunk(
   export const walletsEdit = createAsyncThunk(
     
     "wallets/walletsEdit",
-    async (values) => {
+    async (values, {rejectWithValue}) => {
 
       try {
         const response = await axios.put(
@@ -256,7 +256,7 @@ export const walletsCreate = createAsyncThunk(
         
         return response.data;
       } catch (error) {
-
+        return rejectWithValue(err.response.data);
       }
     }
   );
@@ -329,7 +329,9 @@ const walletsSlice = createSlice({
             
         });
         builder.addCase(walletsCreate.rejected, (state, action) => {
-
+            toast.error(action.payload, {
+                position: "bottom-left",
+            });
             return {
                 ...state,
                 createStatus: "rejected",
@@ -341,7 +343,7 @@ const walletsSlice = createSlice({
         });
         builder.addCase(walletsDelete.fulfilled, (state, action) => {
             const newList = state.wallets.filter((wallet) => wallet.walletName !== action.payload);
-            toast.success("Wallet: " + action.payload.walletName + " deleted", {
+            toast.success("Wallet: " + action.payload + " deleted", {
                 position: "bottom-left",
             });
             return {

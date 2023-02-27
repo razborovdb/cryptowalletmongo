@@ -6,7 +6,7 @@ const walletsSchema = new mongoose.Schema ({
     walletDescription: {type: String, require: true},
     cryptosCount: {type: Number, require: true},
     cryptosCost: {type: Number, require: true},
-    cryptocurrenciesList: {type: Array, require: true},
+    cryptocurrenciesList: {type: Object, require: true},
 },
 {
     timestamps: true,

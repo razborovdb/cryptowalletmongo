@@ -190,23 +190,28 @@ Double paymentDate;
 * Accepts `GET` requests to `/api/crypto`
 * Accepts token and cryptoName as request param, returns crypto.
 
-## 6.8. GetUserWallets Endpoint
+## 6.8. GetUserWallets Endpoint (made)
 
 * Accepts `GET` requests to `/api/wallets`
 * Accepts token and email as request param, returns user wallets list.
 
-## 6.9. AddWallet Endpoint
+## 6.9. AddWallet Endpoint (made)
 
 * Accepts `POST` requests to `/api/wallet`
 * Accepts token and Wallets with all parameters returns added wallet.
 
+## 6.10. UpdateWallet Endpoint (made)
 
-## 6.10. GetUserOneWallet Endpoint
+* Accepts `PUT` requests to `/api/wallet`
+* Accepts token and Wallets with all parameters returns Wallet.
+
+
+## 6.10. GetUserOneWallet Endpoint (made)
 
 * Accepts `GET` requests to `/api/wallet`
 * Accepts token, email and walletName as request param, returns user wallet.
 
-## 6.11. DeleteUserWallet Endpoint
+## 6.11. DeleteUserWallet Endpoint (made)
 
 * Accepts `DELETE` requests to `/api/wallet`
 * Accepts token and Wallet with userId and walletName returns walletName.

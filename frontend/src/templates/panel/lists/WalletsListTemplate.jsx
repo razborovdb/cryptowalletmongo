@@ -4,8 +4,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { walletsDelete, walletsFetch } from "../../slices/WalletsSlice";
-import { toast } from "react-toastify";
-
 
 export default function WalletsListTemplate() {
   const auth = useSelector((state) => state.auth);
@@ -94,7 +92,6 @@ export default function WalletsListTemplate() {
             }
           )
         );
-        toast("Deleted");
       }
   return (
 
