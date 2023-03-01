@@ -6,58 +6,58 @@ import { PrimaryButton } from "./CommonStyled";
 import { cryptosCreate } from "../slices/CryptoCurrenciesSlice";
 
 const CreateCryptosTemplate = () => {
-    const dispatch = useDispatch();
-    const { createStatus } = useSelector((state) => state.cryptos);
-    const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { createStatus } = useSelector((state) => state.cryptos);
+  const auth = useSelector((state) => state.auth);
 
-    const [cryptoImg, setCryptoImg] = useState("");
-    const [cryptoImgUrl, setCryptoImgUrl] = useState("");
-    const [name, setName] = useState("");
-    const [desc, setDesc] = useState("");
-    const [amount, setAmount] = useState("");
-    const [cost, setCost] = useState("");
+  const [cryptoImg, setCryptoImg] = useState("");
+  const [cryptoImgUrl, setCryptoImgUrl] = useState("");
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [amount, setAmount] = useState("");
+  const [cost, setCost] = useState("");
 
-    const handleCryptoImageUpload = (e) => {
-        const file = e.target.files[0];
+  const handleCryptoImageUpload = (e) => {
+    const file = e.target.files[0];
 
-        TransformFileData(file);
-    };
+    TransformFileData(file);
+  };
 
-    const TransformFileData = (file) => {
-        const reader = new FileReader();
+  const TransformFileData = (file) => {
+    const reader = new FileReader();
 
-        if (file) {
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                setCryptoImgUrl(reader.result);
-            };
-        } else {
-            setCryptoImgUrl("");
-        }
-    };
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setCryptoImgUrl(reader.result);
+      };
+    } else {
+      setCryptoImgUrl("");
+    }
+  };
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        dispatch(
-        cryptosCreate({
-            name,
-            image: "",
-            imageUrl: cryptoImgUrl,
-            desc,
-            amount,
-            cost,
-            token: auth.token,
-        })
-        );
+    dispatch(
+      cryptosCreate({
+        name,
+        image: "",
+        imageUrl: cryptoImgUrl,
+        desc,
+        amount,
+        cost,
+        token: auth.token,
+      })
+    );
 
-        //navigate("/panel/cryptos");
+    //navigate("/panel/cryptos");
 
-    };
+  };
 
-    return (
+  return (
     <StyledCreateCrypto>
       <StyledForm onSubmit={handleSubmit}>
         <h3>Create a Crypto</h3>
@@ -100,13 +100,13 @@ const CreateCryptosTemplate = () => {
         </PrimaryButton>
         <div className="back-to-cryptos">
           <Link to="/panel/cryptos">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-              width="20" 
-              height="20" 
-              fill="currentColor" 
-              className="bi bi-arrow-left" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-arrow-left"
               viewBox="0 0 16 16">
-              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
             </svg>
             <span>Back To Cryptos</span>
           </Link>
@@ -124,7 +124,7 @@ const CreateCryptosTemplate = () => {
     </StyledCreateCrypto>
   );
 }
- 
+
 export default CreateCryptosTemplate;
 
 const StyledForm = styled.form`

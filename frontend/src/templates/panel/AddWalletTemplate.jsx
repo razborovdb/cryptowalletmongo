@@ -6,9 +6,9 @@ import { PrimaryButton } from "./CommonStyled";
 import { walletsCreate } from "../slices/WalletsSlice";
 
 const AddWalletTemplate = () => {
-    const dispatch = useDispatch();
-    const auth = useSelector((state) => state.auth);
-    const { createStatus } = useSelector((state) => state.wallets);
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const { createStatus } = useSelector((state) => state.wallets);
 
 
   const [walletName, setWalletName] = useState("");
@@ -21,7 +21,7 @@ const AddWalletTemplate = () => {
     e.preventDefault();
 
     dispatch(
-        walletsCreate({
+      walletsCreate({
         userId: auth.email,
         walletName: walletName,
         walletDescription: walletDescription,
@@ -40,7 +40,7 @@ const AddWalletTemplate = () => {
     <StyledCreateWallet>
       <StyledForm onSubmit={handleSubmit}>
         <h3>Add a Wallet</h3>
-        
+
         <input
           type="text"
           placeholder="Wallet Name"
@@ -60,24 +60,24 @@ const AddWalletTemplate = () => {
 
         <div className="back-to-wallets">
           <Link to="/panel/wallets">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-              width="20" 
-              height="20" 
-              fill="currentColor" 
-              className="bi bi-arrow-left" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-arrow-left"
               viewBox="0 0 16 16">
-              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
             </svg>
             <span>Back To Wallets</span>
           </Link>
         </div>
-        
+
       </StyledForm>
-      
+
     </StyledCreateWallet>
   );
 }
- 
+
 export default AddWalletTemplate;
 
 const StyledForm = styled.form`

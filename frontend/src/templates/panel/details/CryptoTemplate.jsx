@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { setHeaders, url } from "../../slices/api";
 import axios from "axios";
@@ -11,13 +11,13 @@ const CryptoTemplate = () => {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
-    
+
 
     const [crypto, setCrypto] = useState({});
     const [loading, setLoading] = useState(false);
 
     const auth = useSelector((state) => state.auth);
-    
+
     useEffect(() => {
 
         async function fetchData() {
@@ -25,23 +25,23 @@ const CryptoTemplate = () => {
 
 
             try {
-              const res = await axios.get(
-                  `${url}/crypto`, 
-                {                 
-                  headers: setHeaders(auth.token),
-                  params: {
-                    cryptoName: params.id,
-                },
-              },
-              );
+                const res = await axios.get(
+                    `${url}/crypto`,
+                    {
+                        headers: setHeaders(auth.token),
+                        params: {
+                            cryptoName: params.id,
+                        },
+                    },
+                );
 
-      
-              setCrypto(res.data);
+
+                setCrypto(res.data);
             } catch (error) {
-              
+
             }
             setLoading(false);
-          };       
+        };
         fetchData();
     }, []);
 
@@ -49,32 +49,32 @@ const CryptoTemplate = () => {
         navigate("/panel/cryptos");
     };
 
-    return ( 
+    return (
         <StyledCrypto>
             <CryptoContainer>
                 {loading ? (<p>Loading...</p>) :
                     <>
-                    <ImageContainer>
-                        <img src={crypto.imageUrl} alt="crypto" />
-                    </ImageContainer>
-                    <CryptoDetails>
-                        <h3>{crypto.cryptoName}</h3>
-                        <p><span>Description:</span> {crypto.cryptoDescription} </p>
-                        <Price>{crypto.cryptoAmount?.toLocaleString()}</Price>
-                        <Price>${crypto.cryptoCost?.toLocaleString()}</Price>
-                        <button className="cryptodetails-close" onClick={() => 
-                            handleClose()
-                        }>
-                            Close
-                        </button>
-                    </CryptoDetails>
+                        <ImageContainer>
+                            <img src={crypto.imageUrl} alt="crypto" />
+                        </ImageContainer>
+                        <CryptoDetails>
+                            <h3>{crypto.cryptoName}</h3>
+                            <p><span>Description:</span> {crypto.cryptoDescription} </p>
+                            <Price>{crypto.cryptoAmount?.toLocaleString()}</Price>
+                            <Price>${crypto.cryptoCost?.toLocaleString()}</Price>
+                            <button className="cryptodetails-close" onClick={() =>
+                                handleClose()
+                            }>
+                                Close
+                            </button>
+                        </CryptoDetails>
                     </>
                 }
             </CryptoContainer>
         </StyledCrypto>
-     );
+    );
 }
- 
+
 export default CryptoTemplate;
 
 const StyledCrypto = styled.div`

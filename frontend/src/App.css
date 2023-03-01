@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700&display=swap');
-*{
+
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -16,8 +17,8 @@
 }
 
 .link-inactive {
-  color: rgb(97,97,97);
-  
+  color: rgb(97, 97, 97);
+
 }
 
 /* Home */
@@ -59,8 +60,8 @@
   margin: 1rem auto;
   padding: 1rem;
   border-radius: 15;
-  box-shadow: -5px -5px 10px rgba(255,255,255,0.5), 
-    2px 2px 5px rgba(94,104,121,0.3);
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.5),
+    2px 2px 5px rgba(94, 104, 121, 0.3);
 
 }
 
@@ -87,7 +88,8 @@
   font-weight: 700;
 }
 
-.user button, .user-update {
+.user button,
+.user-update {
   width: 100%;
   height: 40px;
   border-radius: 5px;
@@ -136,8 +138,8 @@
   margin: 1rem auto;
   padding: 1rem;
   border-radius: 15;
-  box-shadow: -5px -5px 10px rgba(255,255,255,0.5), 
-    2px 2px 5px rgba(94,104,121,0.3);
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.5),
+    2px 2px 5px rgba(94, 104, 121, 0.3);
 
 }
 
@@ -165,7 +167,8 @@
   font-weight: 700;
 }
 
-.project button, .project-update {
+.project button,
+.project-update {
   width: 120px;
   height: 100px;
 
@@ -201,6 +204,7 @@
 .nav-bar h2 {
   font-size: 40px;
 }
+
 .nav-bar a {
   text-decoration: none;
   color: white;
@@ -217,12 +221,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: rgb(68,68,68);
+  color: rgb(68, 68, 68);
   min-height: 80vh;
 }
+
 .not-found h2 {
   font-size: 55px;
 }
+
 .not-found p {
   font-size: 20px;
 }

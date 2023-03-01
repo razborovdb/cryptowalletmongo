@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { UserHeaders, PrimaryButton } from "./CommonStyled";
 
 const WalletsTemplate = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -18,5 +18,5 @@ const WalletsTemplate = () => {
     </div>
   );
 }
- 
+
 export default WalletsTemplate;

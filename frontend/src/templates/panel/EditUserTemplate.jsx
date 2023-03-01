@@ -8,70 +8,70 @@ import { updateUser } from "../slices/AuthSlice";
 
 
 const EditUserTemplate = () => {
-    const dispatch = useDispatch();
-    const { updateUserStatus } = useSelector((state) => state.auth);
-    const auth = useSelector((state) => state.auth);
-    const params = useParams();
-
-    
-    const [userImg, setUserImg] = useState("");
-    const [userImgUrl, setUserImgUrl] = useState("");
-    const [name, setName] = useState("");
-    const [desc, setDesc] = useState("");
-    const [amount, setAmount] = useState(0.0);
-    const [cost, setCost] = useState(0.0);
-    const [crypto, setCrypto] = useState("");
-    const [findedCrypto, setFindedCrypto] = useState("");
-    const [cryptoName, setCryptoName] = useState("");
-    const [walletName, setWalletName] = useState(params.walletName);
-    // const {cryptos} = useSelector((state) => state.cryptos);
-    const [cryptoParams, setCryptoParams] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [updating, setUpdating] = useState(false);
-    const [cryptos, setCryptos] = useState([]);
-
-    const [user, setUser] = useState("");
-
-    const [previewImg, setPreviewImg] = useState("");
-    
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-
-      async function fetchData() {
-          setLoading(true);
-
-            try {
-              const res = await axios.get(
-                  `${url}/user`, 
-                  {                 
-                    headers: setHeaders(auth.token),
-                    params: {
-                      email: auth.email,
-                    },
-                  },
-              );
+  const dispatch = useDispatch();
+  const { updateUserStatus } = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
+  const params = useParams();
 
 
-              setUser(res.data);
-              setName(res.data.name);
+  const [userImg, setUserImg] = useState("");
+  const [userImgUrl, setUserImgUrl] = useState("");
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [amount, setAmount] = useState(0.0);
+  const [cost, setCost] = useState(0.0);
+  const [crypto, setCrypto] = useState("");
+  const [findedCrypto, setFindedCrypto] = useState("");
+  const [cryptoName, setCryptoName] = useState("");
+  const [walletName, setWalletName] = useState(params.walletName);
+  // const {cryptos} = useSelector((state) => state.cryptos);
+  const [cryptoParams, setCryptoParams] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [cryptos, setCryptos] = useState([]);
 
-              setPreviewImg(res.data.avatarUrl);
-              setUserImgUrl("");
-              setUserImg(res.data.avatar);
+  const [user, setUser] = useState("");
+
+  const [previewImg, setPreviewImg] = useState("");
 
 
-          } catch (error) {
+  const navigate = useNavigate();
 
-          }
-          setLoading(false);
-        };       
-      fetchData();
-    }, []);
+  useEffect(() => {
 
-    const handleUserImageUpload = (e) => {
-      const file = e.target.files[0];
+    async function fetchData() {
+      setLoading(true);
+
+      try {
+        const res = await axios.get(
+          `${url}/user`,
+          {
+            headers: setHeaders(auth.token),
+            params: {
+              email: auth.email,
+            },
+          },
+        );
+
+
+        setUser(res.data);
+        setName(res.data.name);
+
+        setPreviewImg(res.data.avatarUrl);
+        setUserImgUrl("");
+        setUserImg(res.data.avatar);
+
+
+      } catch (error) {
+
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const handleUserImageUpload = (e) => {
+    const file = e.target.files[0];
 
     TransformFileData(file);
   };
@@ -86,115 +86,115 @@ const EditUserTemplate = () => {
         setPreviewImg(reader.result);
       };
     } else {
-        setUserImgUrl("");
+      setUserImgUrl("");
     }
   };
 
 
-   
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        
-        
-        // dispatch(
-        //   updateUser({
-        //       name:  name,
-        //       email: user.email,
-        //       password: user.password,
-        //       avatar: userImg,
-        //       avatarUrl: userImgUrl,
-        //       role: user.role,
-        //       isAdmin: user.isAdmin,
-        //       token: auth.token,
-        //   })
-        // );
-        setUpdating(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        await axios.put(
-          `${url}/user`,
-          {
-              name:  name,
-              email: user.email,
-              password: user.password,
-              avatar: userImg,
-              avatarUrl: userImgUrl,
-              role: user.role,
-              isAdmin: user.isAdmin,
-          },
-          {
-            headers: setHeaders(auth.token)
-        }
 
-        
-        
-      );
-      setUpdating(false);
 
-        //navigate(`/panel/userinfo`);
+    // dispatch(
+    //   updateUser({
+    //       name:  name,
+    //       email: user.email,
+    //       password: user.password,
+    //       avatar: userImg,
+    //       avatarUrl: userImgUrl,
+    //       role: user.role,
+    //       isAdmin: user.isAdmin,
+    //       token: auth.token,
+    //   })
+    // );
+    setUpdating(true);
 
-    };
+    await axios.put(
+      `${url}/user`,
+      {
+        name: name,
+        email: user.email,
+        password: user.password,
+        avatar: userImg,
+        avatarUrl: userImgUrl,
+        role: user.role,
+        isAdmin: user.isAdmin,
+      },
+      {
+        headers: setHeaders(auth.token)
+      }
 
-    
 
-    return (
-      <div>
-        {loading ? (<p>Loading...</p>) :
-      <StyledUser>
-        <UserContainer>
-                <StyledForm onSubmit={handleSubmit}>
-                    <h3>Edit User: {user.email}</h3>
-                    <input
-                    id="imgUpload"
-                    accept="image/*"
-                    type="file"
-                    onChange={handleUserImageUpload}
-                    />
-                    <input
-                    type="text"
-                    defaultValue={user.name}
-                    placeholder="Name"
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                    disabled={true}
-                    required
-                    />
-                    
 
-                    <PrimaryButton type="submit">
-                    {updating ? "Submitting" : "Submit"}
-                    </PrimaryButton>
-                    <div className="back-to-wallet">
-                    <Link to={`/panel/userinfo`}>
-                      <svg xmlns="http://www.w3.org/2000/svg" 
-                        width="20" 
-                        height="20" 
-                        fill="currentColor" 
-                        className="bi bi-arrow-left" 
-                        viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                      </svg>
-                      <span>Back To User Info</span>
-                    </Link>
-                  </div>
-                </StyledForm>
-                <ImagePreview>
-                    {previewImg ? (
-                    <>
-                        <img src={previewImg} alt="error!" />
-                    </>
-                    ) : (
-                    <p>User image upload preview will appear here!</p>
-                    )}
-                </ImagePreview>
-                </UserContainer>
-            </StyledUser>
-          }
-          </div>
     );
-  }
- 
+    setUpdating(false);
+
+    //navigate(`/panel/userinfo`);
+
+  };
+
+
+
+  return (
+    <div>
+      {loading ? (<p>Loading...</p>) :
+        <StyledUser>
+          <UserContainer>
+            <StyledForm onSubmit={handleSubmit}>
+              <h3>Edit User: {user.email}</h3>
+              <input
+                id="imgUpload"
+                accept="image/*"
+                type="file"
+                onChange={handleUserImageUpload}
+              />
+              <input
+                type="text"
+                defaultValue={user.name}
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                disabled={true}
+                required
+              />
+
+
+              <PrimaryButton type="submit">
+                {updating ? "Submitting" : "Submit"}
+              </PrimaryButton>
+              <div className="back-to-wallet">
+                <Link to={`/panel/userinfo`}>
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-arrow-left"
+                    viewBox="0 0 16 16">
+                    <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                  </svg>
+                  <span>Back To User Info</span>
+                </Link>
+              </div>
+            </StyledForm>
+            <ImagePreview>
+              {previewImg ? (
+                <>
+                  <img src={previewImg} alt="error!" />
+                </>
+              ) : (
+                <p>User image upload preview will appear here!</p>
+              )}
+            </ImagePreview>
+          </UserContainer>
+        </StyledUser>
+      }
+    </div>
+  );
+}
+
 export default EditUserTemplate;
 
 const Edit = styled.div`

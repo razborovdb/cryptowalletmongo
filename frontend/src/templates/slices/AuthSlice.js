@@ -1,7 +1,7 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import {setHeaders, url} from "./api";
+import { setHeaders, url } from "./api";
 
 const initialState = {
     token: "", //localStorage.getItem("token"),
@@ -21,11 +21,11 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
     "auth/registerUser",
-    async (values, {rejectWithValue}) => {
+    async (values, { rejectWithValue }) => {
         try {
 
             const token = await axios.post(`${url}/user/register`, {
-                name:  values.name,
+                name: values.name,
                 email: values.email,
                 password: values.password,
                 avatar: values.avatar,
@@ -34,10 +34,10 @@ export const registerUser = createAsyncThunk(
                 isAdmin: false
             });
 
-           // localStorage.setItem("token", token.data);
+            // localStorage.setItem("token", token.data);
 
             return token.data;
-        } catch(err) {
+        } catch (err) {
             return rejectWithValue(err.response.data);
         }
     }
@@ -46,7 +46,7 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
     "auth/loginUser",
-    async (values, {rejectWithValue}) => {
+    async (values, { rejectWithValue }) => {
         try {
 
 
@@ -55,10 +55,10 @@ export const loginUser = createAsyncThunk(
                 password: values.password
             });
 
-           // localStorage.setItem("token", token.data);
+            // localStorage.setItem("token", token.data);
 
             return token.data;
-        } catch(err) {
+        } catch (err) {
 
             return rejectWithValue(err.response.data);
         }
@@ -68,7 +68,7 @@ export const loginUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
     "auth/updateUser",
-    async (values, {rejectWithValue}) => {
+    async (values, { rejectWithValue }) => {
         console.log(values);
         try {
 
@@ -76,7 +76,7 @@ export const updateUser = createAsyncThunk(
             const response = await axios.put(
                 `${url}/user`,
                 {
-                    name:  values.name,
+                    name: values.name,
                     email: values.email,
                     password: values.password,
                     avatar: values.avatar,
@@ -85,16 +85,16 @@ export const updateUser = createAsyncThunk(
                     isAdmin: values.isAdmin,
                 },
                 {
-                  headers: setHeaders(values.token)
-              }
-              
+                    headers: setHeaders(values.token)
+                }
+
             );
 
-           // localStorage.setItem("token", token.data);
-           console.log(response.data);
+            // localStorage.setItem("token", token.data);
+            console.log(response.data);
 
             return response.data;
-        } catch(err) {
+        } catch (err) {
             console.log(err);
             return rejectWithValue(err.response.data);
         }
@@ -105,7 +105,7 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        loadUser(state, action) {            
+        loadUser(state, action) {
             const token = state.token;
 
             if (token) {
@@ -143,7 +143,7 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(registerUser.pending, (state, action) => {
-            return {...state, registerStatus: "pending"};
+            return { ...state, registerStatus: "pending" };
         });
         builder.addCase(registerUser.fulfilled, (state, action) => {
             if (action.payload) {
@@ -174,7 +174,7 @@ const authSlice = createSlice({
         });
         builder.addCase(loginUser.pending, (state, action) => {
 
-            return {...state, loginStatus: "pending"};
+            return { ...state, loginStatus: "pending" };
         });
         builder.addCase(loginUser.fulfilled, (state, action) => {
             if (action.payload) {
@@ -208,7 +208,7 @@ const authSlice = createSlice({
 
         builder.addCase(updateUser.pending, (state, action) => {
             console.log("start");
-            return {...state, updateUserStatus: "pending"};
+            return { ...state, updateUserStatus: "pending" };
         });
         builder.addCase(updateUser.fulfilled, (state, action) => {
             console.log("fullfield");
@@ -227,8 +227,8 @@ const authSlice = createSlice({
             }
         });
     },
-    
+
 });
 
 export default authSlice.reducer;
-export const {loadUser, logoutUser} = authSlice.actions;
+export const { loadUser, logoutUser } = authSlice.actions;

@@ -4,164 +4,164 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { getAllCryptos } from "../slices/CryptoCurrenciesSlice";
 
-import {walletsCreateCrypto} from "../slices/WalletsSlice"
+import { walletsCreateCrypto } from "../slices/WalletsSlice"
 
 
 const CreateCryptoInWalletTemplate = () => {
-    const dispatch = useDispatch();
-    const { createStatus } = useSelector((state) => state.wallets);
-    const auth = useSelector((state) => state.auth);
-    const params = useParams();
+  const dispatch = useDispatch();
+  const { createStatus } = useSelector((state) => state.wallets);
+  const auth = useSelector((state) => state.auth);
+  const params = useParams();
 
-    const [cryptoImg, setCryptoImg] = useState("");
-    const [cryptoImgUrl, setCryptoImgUrl] = useState("");
-    const [name, setName] = useState("");
-    const [desc, setDesc] = useState("");
-    const [amount, setAmount] = useState(0);
-    const [cost, setCost] = useState(0);
-    const [crypto, setCrypto] = useState("");
-    const [cryptoName, setCryptoName] = useState("");
-    const [walletName, setWalletName] = useState(params.walletName);
-    const {cryptos} = useSelector((state) => state.cryptos);
-    const [cryptoParams, setCryptoParams] = useState("");
-    
+  const [cryptoImg, setCryptoImg] = useState("");
+  const [cryptoImgUrl, setCryptoImgUrl] = useState("");
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [cost, setCost] = useState(0);
+  const [crypto, setCrypto] = useState("");
+  const [cryptoName, setCryptoName] = useState("");
+  const [walletName, setWalletName] = useState(params.walletName);
+  const { cryptos } = useSelector((state) => state.cryptos);
+  const [cryptoParams, setCryptoParams] = useState("");
 
-    const navigate = useNavigate();
 
-    useEffect(() => {
-  
-      dispatch(
-        getAllCryptos(
-          {
-            token: auth.token
-          }
-        )
-      );
-    }, [dispatch]);
-   
+  const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        dispatch(
-          walletsCreateCrypto({
-            userId: auth.email,
-              walletName: walletName,
-              cryptoName: cryptoName,
-              cryptoType: crypto,
-              image: "",
-              imageUrl: cryptoImgUrl,
-              cryptoDescription: desc,
-              cryptoAmount: amount,
-              cryptoCost: cost,
-              token: auth.token,
-          })
-        );
+  useEffect(() => {
 
-        navigate(`/edit-wallet/${walletName}`);
+    dispatch(
+      getAllCryptos(
+        {
+          token: auth.token
+        }
+      )
+    );
+  }, [dispatch]);
 
-    };
 
-    const handleSetCrypto = (e) => {
-      const curCrypto = e.target.value;
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-      setCrypto(curCrypto);
-      let findCrypto = cryptos.filter((crypto) => crypto.cryptoName === curCrypto);
-      findCrypto = findCrypto[0];
+    dispatch(
+      walletsCreateCrypto({
+        userId: auth.email,
+        walletName: walletName,
+        cryptoName: cryptoName,
+        cryptoType: crypto,
+        image: "",
+        imageUrl: cryptoImgUrl,
+        cryptoDescription: desc,
+        cryptoAmount: amount,
+        cryptoCost: cost,
+        token: auth.token,
+      })
+    );
 
-      setCryptoParams(findCrypto);
+    navigate(`/edit-wallet/${walletName}`);
 
-      setCost(amount * findCrypto.cryptoCost);
+  };
 
-      setCryptoImgUrl(findCrypto.imageUrl);
+  const handleSetCrypto = (e) => {
+    const curCrypto = e.target.value;
 
-    };
+    setCrypto(curCrypto);
+    let findCrypto = cryptos.filter((crypto) => crypto.cryptoName === curCrypto);
+    findCrypto = findCrypto[0];
 
-    const handleChangeAmount = (e) => {
-      const changeAmount = e.target.value;
+    setCryptoParams(findCrypto);
 
-      setAmount(changeAmount);
-      setCost(changeAmount * cryptoParams.cryptoCost);
+    setCost(amount * findCrypto.cryptoCost);
 
-    };
+    setCryptoImgUrl(findCrypto.imageUrl);
 
-    return (
+  };
+
+  const handleChangeAmount = (e) => {
+    const changeAmount = e.target.value;
+
+    setAmount(changeAmount);
+    setCost(changeAmount * cryptoParams.cryptoCost);
+
+  };
+
+  return (
     <StyledCreateCrypto>
       <CryptoContainer>
-      <StyledForm onSubmit={(e) => handleSubmit(e)}>
-        <h3>Add a Crypto to Wallet: {walletName}</h3>
+        <StyledForm onSubmit={(e) => handleSubmit(e)}>
+          <h3>Add a Crypto to Wallet: {walletName}</h3>
 
 
-        <input
-          type="text"
-          placeholder="Crypto Name"
-          onChange={(e) => setCryptoName(e.target.value)}
-          required
-        />
+          <input
+            type="text"
+            placeholder="Crypto Name"
+            onChange={(e) => setCryptoName(e.target.value)}
+            required
+          />
 
-        <select onChange={(e) => handleSetCrypto(e)} required>
-          <option value="">Select Crypto Type</option>
-          {cryptos?.map((crypto) => (
-            <option key={crypto.cryptoName}>
-              {crypto.cryptoName}
-            </option>
-          ))}
-        </select>
+          <select onChange={(e) => handleSetCrypto(e)} required>
+            <option value="">Select Crypto Type</option>
+            {cryptos?.map((crypto) => (
+              <option key={crypto.cryptoName}>
+                {crypto.cryptoName}
+              </option>
+            ))}
+          </select>
 
-        <input
-          type="text"
-          placeholder="Description"
-          onChange={(e) => setDesc(e.target.value)}
-          required
-        />
-        <input
-          type="number"
-          step="0.000001"
-          defaultValue = {amount}
-          placeholder="Amount"
-          onChange={(e) => handleChangeAmount(e)}
-          required
-        />
-        <input
-          type="number"
-          step="0.01"
-          value = {cost}
-          placeholder="0"
-          disabled={true}          
-          required
-        />
+          <input
+            type="text"
+            placeholder="Description"
+            onChange={(e) => setDesc(e.target.value)}
+            required
+          />
+          <input
+            type="number"
+            step="0.000001"
+            defaultValue={amount}
+            placeholder="Amount"
+            onChange={(e) => handleChangeAmount(e)}
+            required
+          />
+          <input
+            type="number"
+            step="0.01"
+            value={cost}
+            placeholder="0"
+            disabled={true}
+            required
+          />
 
-        <PrimaryButton type="submit">
-          {createStatus === "pending" ? "Submitting" : "Submit"}
-        </PrimaryButton>
-        <div className="back-to-wallet">
-          <Link to={`/edit-wallet/${walletName}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" 
-              width="20" 
-              height="20" 
-              fill="currentColor" 
-              className="bi bi-arrow-left" 
-              viewBox="0 0 16 16">
-              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-            </svg>
-            <span>Back To Wallet</span>
-          </Link>
-        </div>
-      </StyledForm>
-      <ImagePreview>
-        {cryptoImgUrl ? (
-          <>
-            <img src={cryptoImgUrl} alt="error!" />
-          </>
-        ) : (
-          <p>Crypto image will appear here!</p>
-        )}
-      </ImagePreview>
+          <PrimaryButton type="submit">
+            {createStatus === "pending" ? "Submitting" : "Submit"}
+          </PrimaryButton>
+          <div className="back-to-wallet">
+            <Link to={`/edit-wallet/${walletName}`}>
+              <svg xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="bi bi-arrow-left"
+                viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+              </svg>
+              <span>Back To Wallet</span>
+            </Link>
+          </div>
+        </StyledForm>
+        <ImagePreview>
+          {cryptoImgUrl ? (
+            <>
+              <img src={cryptoImgUrl} alt="error!" />
+            </>
+          ) : (
+            <p>Crypto image will appear here!</p>
+          )}
+        </ImagePreview>
       </CryptoContainer>
     </StyledCreateCrypto>
   );
 }
- 
+
 export default CreateCryptoInWalletTemplate;
 
 const CryptoContainer = styled.div`

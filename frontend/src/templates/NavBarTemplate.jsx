@@ -1,5 +1,5 @@
-import {Link, useNavigate} from "react-router-dom";
-import {useSelector, useDispatch} from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { logoutUser } from "../templates/slices/AuthSlice";
@@ -9,39 +9,39 @@ const NavBarTemplate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    return ( 
+    return (
         <nav className="nav-bar">
             <Link to="/">
                 <h2>CryptoWallet</h2>
             </Link>
             {
-                auth.userLoaded ? 
-                (
-                    <Links>
-                        <div>
-                            <Link to="/panel/userinfo">
-                                <h2>{auth.name}</h2>
-                            </Link>
-                        </div>
-                        
-                        <div onClick={() => {
-                            dispatch(logoutUser(null));
-                            navigate("/");
-                            toast.warning("Logged out!", {position: "bottom-left"});
-                        }}>
-                            Logout
-                        </div>
-                    </Links>
-                )
-                : <AuthLinks>
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
-                </AuthLinks>
+                auth.userLoaded ?
+                    (
+                        <Links>
+                            <div>
+                                <Link to="/panel/userinfo">
+                                    <h2>{auth.name}</h2>
+                                </Link>
+                            </div>
+
+                            <div onClick={() => {
+                                dispatch(logoutUser(null));
+                                navigate("/");
+                                toast.warning("Logged out!", { position: "bottom-left" });
+                            }}>
+                                Logout
+                            </div>
+                        </Links>
+                    )
+                    : <AuthLinks>
+                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
+                    </AuthLinks>
             }
         </nav>
-     );
+    );
 }
- 
+
 export default NavBarTemplate;
 
 const AuthLinks = styled.div`

@@ -1,52 +1,52 @@
 import styled from "styled-components";
-import {NavLink, Outlet} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {FaUsers, FaWallet, FaBitcoin, FaUserCircle} from "react-icons/fa";
+import { NavLink, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { FaUsers, FaWallet, FaBitcoin, FaUserCircle } from "react-icons/fa";
 
 const PanelTemplate = () => {
     const auth = useSelector((state) => state.auth);
 
     if (!auth.userLoaded) return (<p>Access denied.</p>);
-    return ( 
+    return (
         <StyledPanel>
             <SideNav>
                 <h3>Quick Links</h3>
                 <NavLink
                     className={
-                        ({isActive}) => isActive ? "link-active" : "link-inactive"
+                        ({ isActive }) => isActive ? "link-active" : "link-inactive"
                     }
                     to="/panel/userinfo">
-                        <FaUserCircle/> User Info
+                    <FaUserCircle /> User Info
                 </NavLink>
                 <NavLink
                     className={
-                        ({isActive}) => isActive ? "link-active" : "link-inactive"
+                        ({ isActive }) => isActive ? "link-active" : "link-inactive"
                     }
                     to="/panel/wallets">
-                        <FaWallet/> Wallets
+                    <FaWallet /> Wallets
                 </NavLink>
                 {auth.isAdmin ? (
                     <>
-                    <NavLink
-                        className={
-                            ({isActive}) => isActive ? "link-active" : "link-inactive"
-                        }
-                        to="/panel/cryptos">
-                            <FaBitcoin/> Cryptos
-                    </NavLink>
+                        <NavLink
+                            className={
+                                ({ isActive }) => isActive ? "link-active" : "link-inactive"
+                            }
+                            to="/panel/cryptos">
+                            <FaBitcoin /> Cryptos
+                        </NavLink>
                     </>
                 ) : (
                     <div></div>
                 )}
-                
+
             </SideNav>
             <Content>
-                <Outlet/>
+                <Outlet />
             </Content>
         </StyledPanel>
     );
 }
- 
+
 export default PanelTemplate;
 
 const StyledPanel = styled.div`

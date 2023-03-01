@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import { toast } from "react-toastify";
 
 import { setHeaders, url } from "../templates/slices/api";
@@ -13,7 +13,7 @@ import axios from "axios";
 
 const HomeTemplate = () => {
     const [project, setProject] = useState("");
-    
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -26,20 +26,20 @@ const HomeTemplate = () => {
 
         async function fetchData() {
             setLoading(true);
-  
-              try {
+
+            try {
                 const res = await axios.get(
-                    `${url}/project`, 
-                    
+                    `${url}/project`,
+
                 );
-  
+
                 setProject(res.data);
-  
+
             } catch (error) {
-              
+
             }
             setLoading(false);
-          };       
+        };
         fetchData();
     }, []);
 
@@ -49,31 +49,31 @@ const HomeTemplate = () => {
     }
 
     return (
-    <div className="project-container">
-        {loading ? (<p>Loading...</p>) :
-            <div>
-                <h2>Project Info</h2>
-                <div className="projects">
-                    
-                    <div className="project">
-                        <h3>{project.projectName}</h3>
-                        <img src={project.imageUrl} alt={project.projectName} />
-                        <div className="details">
-                            <span>{project.projectDescription}</span>
-                        </div>
-                        { (auth.userLoaded && showButton) ? (
-                            <>
-                                <button onClick = {() => handleDonate()}>Donate</button>
-                            </>
-                        ) : (<p></p>)
-                        }
-                    </div>
+        <div className="project-container">
+            {loading ? (<p>Loading...</p>) :
+                <div>
+                    <h2>Project Info</h2>
+                    <div className="projects">
 
-                
+                        <div className="project">
+                            <h3>{project.projectName}</h3>
+                            <img src={project.imageUrl} alt={project.projectName} />
+                            <div className="details">
+                                <span>{project.projectDescription}</span>
+                            </div>
+                            {(auth.userLoaded && showButton) ? (
+                                <>
+                                    <button onClick={() => handleDonate()}>Donate</button>
+                                </>
+                            ) : (<p></p>)
+                            }
+                        </div>
+
+
+                    </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
     );
 }
 

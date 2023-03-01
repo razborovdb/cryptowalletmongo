@@ -5,13 +5,13 @@ const { Cryptocurrency } = require("../modules/cryptocurrency");
 
 
 
-router.get ("/", async (req,res) => {
+router.get("/", async (req, res) => {
     try {
 
         const cryptocurrencies = await Cryptocurrency.find();
 
         res.status(200).send(cryptocurrencies);
-    } catch(err) {
+    } catch (err) {
 
         res.status(500).send(err);
     };

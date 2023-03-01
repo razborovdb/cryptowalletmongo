@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
 
-    let user = await Users.findOne({email: req.body.email});
+    let user = await Users.findOne({ email: req.body.email });
     if (user) return res.status(400).send("User already exist ...");
 
     user = new Users({
@@ -21,14 +21,14 @@ router.post("/", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     await user.save()
-    .then(item => {
-        const token = genAuthToken(item);
-        res.send(token);
-    })
-    .catch(err => {
-        res.status(400).send(err.message);
-    });
+        .then(item => {
+            const token = genAuthToken(item);
+            res.send(token);
+        })
+        .catch(err => {
+            res.status(400).send(err.message);
+        });
 
-} );
+});
 
 module.exports = router;

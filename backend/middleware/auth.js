@@ -72,4 +72,4 @@ const isUserQuery = (req, res, next) => {
 };
 
 
-module.exports = { auth, isUser, isAdmin, isUserBody, isUserQuery, isUserBodyId};
+module.exports = { auth, isUser, isAdmin, isUserBody, isUserQuery, isUserBodyId };

@@ -5,7 +5,7 @@ const { Projects } = require("../modules/projects");
 
 
 
-router.get ("/", async (req,res) => {
+router.get("/", async (req, res) => {
     try {
 
         const projects = await Projects.find();
@@ -13,7 +13,7 @@ router.get ("/", async (req,res) => {
         const pr = projects ? projects[0] : {};
 
         res.status(200).send(pr);
-    } catch(err) {
+    } catch (err) {
 
         res.status(500).send(err);
     };

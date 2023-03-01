@@ -1,5 +1,5 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { setHeaders, url } from "../../slices/api";
 import axios from "axios";
@@ -9,165 +9,166 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const WalletTemplate = () => {
 
-    const params = useParams();
+  const params = useParams();
 
-    const [walletName, setWalletName] = useState(params.walletName);
+  const [walletName, setWalletName] = useState(params.walletName);
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const navigate = useNavigate();
-    
-
-    const [wallet, setWallet] = useState({});
-    const [walletDescription, setWalletDescription] = useState("");
-
-    const [newRows, setRows] = useState([]);
-    const [newCols, setCols] = useState([]);
-
-    const [crypto, setCrypto] = useState({});
-    const [loading, setLoading] = useState(false);
-
-    const auth = useSelector((state) => state.auth);
-    
-    useEffect(() => {
-
-        async function fetchData() {
-            setLoading(true);
-
-              try {
-                const res = await axios.get(
-                    `${url}/wallet`, 
-                    {                 
-                      headers: setHeaders(auth.token),
-                      params: {
-                        email: auth.email,
-                        walletName: params.walletName,
-                      },
-                    },
-                );
-    
-                    
-                setWallet(res.data);
-                setWalletDescription(res.data.walletDescription);
-                createTable(res.data.cryptocurrenciesList);
+  const navigate = useNavigate();
 
 
+  const [wallet, setWallet] = useState({});
+  const [walletDescription, setWalletDescription] = useState("");
 
+  const [newRows, setRows] = useState([]);
+  const [newCols, setCols] = useState([]);
 
-            } catch (error) {
-              
-            }
-            setLoading(false);
-          };       
-        fetchData();
-    }, []);
+  const [crypto, setCrypto] = useState({});
+  const [loading, setLoading] = useState(false);
 
-    const createTable = (data) => {
+  const auth = useSelector((state) => state.auth);
 
-      const rows = data ? (
-        data.map(crypto => {
-          return {
-              id: crypto.cryptoName,
-              cryptoType: crypto.cryptoType,
-              image: crypto.image,
-              imageUrl: crypto.imageUrl,
-              desc: crypto.cryptoDescription,
-              amount: crypto.cryptoAmount ,
-              cost: crypto.cryptoCost,
-          }
-      })) : [];
-      setRows(rows);
-  
-      
-      const columns = [
-          { field: 'id', headerName: 'Crypto Name', width: 200 },
-          { field: 'cryptoType', headerName: 'Crypto Type', width: 200 },
-          
-  
-          { field: 'imageUrl', headerName: 'Crypto Image', width: 80, 
-              renderCell: (params) => {
-  
-                  return (
-                      <ImageContainer>
-                          <img src={params.row.imageUrl} alt=""/>
-                      </ImageContainer>
-                  );
-              } 
-          },
-  
+  useEffect(() => {
+
+    async function fetchData() {
+      setLoading(true);
+
+      try {
+        const res = await axios.get(
+          `${url}/wallet`,
           {
-              field: 'desc',
-              headerName: 'Cryptos Description',
-              width: 120,
+            headers: setHeaders(auth.token),
+            params: {
+              email: auth.email,
+              walletName: params.walletName,
             },
-            {
-              field: 'amount',
-              headerName: 'Cryptos Amount',
-              width: 120,
-            },
-            {
-              field: 'cost',
-              headerName: 'Cryptos Cost',
-              width: 120,
-            },
-          
-      ];
-      setCols(columns);
+          },
+        );
+
+
+        setWallet(res.data);
+        setWalletDescription(res.data.walletDescription);
+        createTable(res.data.cryptocurrenciesList);
 
 
 
 
+      } catch (error) {
+
+      }
+      setLoading(false);
     };
+    fetchData();
+  }, []);
 
-  
+  const createTable = (data) => {
 
-    return ( 
-        <StyledWallet>
-            <WalletContainer>
-                {loading ? (<p>Loading...</p>) :
-                    
-                      <WalletDetails >
-                        <h3>View Wallet: {wallet.walletName}</h3>
-                        <h2>Wallet description: {wallet.walletDescription}</h2>
-                        <h2>Cryptos cost: ${wallet.cryptosCost}</h2>
-                        <CryptoCountDiv>
-                          <h2>Cryptos count: {wallet.cryptosCount?.toLocaleString()}</h2>
-                          
-                        </CryptoCountDiv>
+    const rows = data ? (
+      data.map(crypto => {
+        return {
+          id: crypto.cryptoName,
+          cryptoType: crypto.cryptoType,
+          image: crypto.image,
+          imageUrl: crypto.imageUrl,
+          desc: crypto.cryptoDescription,
+          amount: crypto.cryptoAmount,
+          cost: crypto.cryptoCost,
+        }
+      })) : [];
+    setRows(rows);
 
 
-                        <GridDiv>
-                          <DataGrid
-                                  rows={newRows}
-                                  columns={newCols}
-                                  pageSize={5}
-                                  rowsPerPageOptions={[5]}
-                                  checkboxSelection
-                                  disableSelectionOnClick
-                          />
-                        </GridDiv>
+    const columns = [
+      { field: 'id', headerName: 'Crypto Name', width: 200 },
+      { field: 'cryptoType', headerName: 'Crypto Type', width: 200 },
 
-                        <div className="back-to-wallets">
-                          <Link to="/panel/wallets">
-                            <svg xmlns="http://www.w3.org/2000/svg" 
-                              width="20" 
-                              height="20" 
-                              fill="currentColor" 
-                              className="bi bi-arrow-left" 
-                              viewBox="0 0 16 16">
-                              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                            </svg>
-                            <span>Back To Wallets</span>
-                          </Link>
-                        </div>
-                      </WalletDetails>
 
-                }
-            </WalletContainer>
-        </StyledWallet>
-     );
+      {
+        field: 'imageUrl', headerName: 'Crypto Image', width: 80,
+        renderCell: (params) => {
+
+          return (
+            <ImageContainer>
+              <img src={params.row.imageUrl} alt="" />
+            </ImageContainer>
+          );
+        }
+      },
+
+      {
+        field: 'desc',
+        headerName: 'Cryptos Description',
+        width: 120,
+      },
+      {
+        field: 'amount',
+        headerName: 'Cryptos Amount',
+        width: 120,
+      },
+      {
+        field: 'cost',
+        headerName: 'Cryptos Cost',
+        width: 120,
+      },
+
+    ];
+    setCols(columns);
+
+
+
+
+  };
+
+
+
+  return (
+    <StyledWallet>
+      <WalletContainer>
+        {loading ? (<p>Loading...</p>) :
+
+          <WalletDetails >
+            <h3>View Wallet: {wallet.walletName}</h3>
+            <h2>Wallet description: {wallet.walletDescription}</h2>
+            <h2>Cryptos cost: ${wallet.cryptosCost}</h2>
+            <CryptoCountDiv>
+              <h2>Cryptos count: {wallet.cryptosCount?.toLocaleString()}</h2>
+
+            </CryptoCountDiv>
+
+
+            <GridDiv>
+              <DataGrid
+                rows={newRows}
+                columns={newCols}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                disableSelectionOnClick
+              />
+            </GridDiv>
+
+            <div className="back-to-wallets">
+              <Link to="/panel/wallets">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="bi bi-arrow-left"
+                  viewBox="0 0 16 16">
+                  <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+                <span>Back To Wallets</span>
+              </Link>
+            </div>
+          </WalletDetails>
+
+        }
+      </WalletContainer>
+    </StyledWallet>
+  );
 }
- 
+
 export default WalletTemplate;
 
 

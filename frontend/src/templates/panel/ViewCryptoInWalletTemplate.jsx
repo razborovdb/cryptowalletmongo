@@ -8,82 +8,82 @@ import styled from "styled-components";
 
 
 const ViewCryptoInWalletTemplate = () => {
-    const dispatch = useDispatch();
-    const { createStatus } = useSelector((state) => state.wallets);
-    const auth = useSelector((state) => state.auth);
-    const params = useParams();
+  const dispatch = useDispatch();
+  const { createStatus } = useSelector((state) => state.wallets);
+  const auth = useSelector((state) => state.auth);
+  const params = useParams();
 
-    const [crypto, setCrypto] = useState("");
-    const [walletName, setWalletName] = useState(params.walletName);
-    const [cryptoName, setCryptoName] = useState(params.cryptoName);
-    const {cryptos} = useSelector((state) => state.cryptos);
-    const [cryptoParams, setCryptoParams] = useState("");
-    const [loading, setLoading] = useState(false);
-    
+  const [crypto, setCrypto] = useState("");
+  const [walletName, setWalletName] = useState(params.walletName);
+  const [cryptoName, setCryptoName] = useState(params.cryptoName);
+  const { cryptos } = useSelector((state) => state.cryptos);
+  const [cryptoParams, setCryptoParams] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
 
-    useEffect(() => {
+  const navigate = useNavigate();
 
-      async function fetchData() {
-          setLoading(true);
+  useEffect(() => {
 
-            try {
-              const res = await axios.get(
-                  `${url}/wallet`, 
-                  {                 
-                    headers: setHeaders(auth.token),
-                    params: {
-                      email: auth.email,
-                      walletName: params.walletName,
-                    },
-                  },
-              );
+    async function fetchData() {
+      setLoading(true);
 
-  
-              let findCrypto = res.data.cryptocurrenciesList.filter((crypto) => crypto.cryptoName === params.cryptoName);
-              findCrypto = findCrypto[0];
-              setCrypto(findCrypto)
+      try {
+        const res = await axios.get(
+          `${url}/wallet`,
+          {
+            headers: setHeaders(auth.token),
+            params: {
+              email: auth.email,
+              walletName: params.walletName,
+            },
+          },
+        );
 
-          } catch (error) {
 
-          }
-          setLoading(false);
-        };       
-      fetchData();
+        let findCrypto = res.data.cryptocurrenciesList.filter((crypto) => crypto.cryptoName === params.cryptoName);
+        findCrypto = findCrypto[0];
+        setCrypto(findCrypto)
+
+      } catch (error) {
+
+      }
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   const handleClose = () => {
     navigate(`/edit-wallet/${walletName}`);
-};
+  };
 
-  return ( 
+  return (
     <StyledCrypto>
-        <CryptoContainer>
-            {loading ? (<p>Loading...</p>) :
-                <>
-                <ImageContainer>
-                    <img src={crypto.imageUrl} alt="crypto" />
-                </ImageContainer>
-                <CryptoDetails>
-                    <h3>{crypto.cryptoName} in {walletName}</h3>
-                    <p><span>Crypto Type:</span> {crypto.cryptoType} </p>
-                    <p><span>Description:</span> {crypto.cryptoDescription} </p>
-                    <Price>{crypto.cryptoAmount?.toLocaleString()}</Price>
-                    <Price>${crypto.cryptoCost?.toLocaleString()}</Price>
-                    <button className="cryptodetails-close" onClick={() => 
-                        handleClose()
-                    }>
-                        Close
-                    </button>
-                </CryptoDetails>
-                </>
-            }
-        </CryptoContainer>
+      <CryptoContainer>
+        {loading ? (<p>Loading...</p>) :
+          <>
+            <ImageContainer>
+              <img src={crypto.imageUrl} alt="crypto" />
+            </ImageContainer>
+            <CryptoDetails>
+              <h3>{crypto.cryptoName} in {walletName}</h3>
+              <p><span>Crypto Type:</span> {crypto.cryptoType} </p>
+              <p><span>Description:</span> {crypto.cryptoDescription} </p>
+              <Price>{crypto.cryptoAmount?.toLocaleString()}</Price>
+              <Price>${crypto.cryptoCost?.toLocaleString()}</Price>
+              <button className="cryptodetails-close" onClick={() =>
+                handleClose()
+              }>
+                Close
+              </button>
+            </CryptoDetails>
+          </>
+        }
+      </CryptoContainer>
     </StyledCrypto>
- );
+  );
 }
- 
+
 export default ViewCryptoInWalletTemplate;
 
 const StyledCrypto = styled.div`
