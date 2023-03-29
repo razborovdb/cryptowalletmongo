@@ -178,7 +178,9 @@ const cryptosSlice = createSlice({
       return { ...state, status: "pending" };
     });
     builder.addCase(updateAllCryptos.fulfilled, (state, action) => {
-
+      toast.success("Cryptos updated", {
+        position: "bottom-left",
+      });
       return {
         ...state,
         cryptos: action.payload,
